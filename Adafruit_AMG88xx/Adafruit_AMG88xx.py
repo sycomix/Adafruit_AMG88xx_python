@@ -171,11 +171,7 @@ class Adafruit_AMG88xx(object):
 
 
 	def getInterrupt(self):
-		buf = []
-		for i in range(0, 8):
-			buf.append(self._device.readU8(AMG88xx_INT_OFFSET + i))
-			
-		return buf
+	    return [self._device.readU8(AMG88xx_INT_OFFSET + i) for i in range(0, 8)]
 
 	def clearInterrupt(self):
 
@@ -200,16 +196,10 @@ class Adafruit_AMG88xx(object):
 		return buf
 
 	def twoCompl12(self, val):
-		if  0x7FF & val == val:
-			return float(val)
-		else:
-			return float(val-4096 )
+	    return float(val) if 0x7FF & val == val else float(val-4096 )
 
 	def signedMag12ToFloat(self, val):
-		#take first 11 bits as absolute val
-		if  0x7FF & val == val:
-			return float(val)
-		else:
-			return  - float(0x7FF & val)
+	    	#take first 11 bits as absolute val
+	    return float(val) if 0x7FF & val == val else - float(0x7FF & val)
 
 		

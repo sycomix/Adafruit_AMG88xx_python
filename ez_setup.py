@@ -123,7 +123,7 @@ def use_setuptools(version=DEFAULT_VERSION, download_base=DEFAULT_URL,
     except ImportError:
         return _do_download(version, download_base, to_dir, download_delay)
     try:
-        pkg_resources.require("setuptools>=" + version)
+        pkg_resources.require(f"setuptools>={version}")
         return
     except pkg_resources.DistributionNotFound:
         return _do_download(version, download_base, to_dir, download_delay)
@@ -174,10 +174,9 @@ def has_powershell():
     cmd = ['powershell', '-Command', 'echo test']
     devnull = open(os.path.devnull, 'wb')
     try:
-        try:
-            subprocess.check_call(cmd, stdout=devnull, stderr=devnull)
-        except Exception:
-            return False
+        subprocess.check_call(cmd, stdout=devnull, stderr=devnull)
+    except Exception:
+        return False
     finally:
         devnull.close()
     return True
@@ -192,10 +191,9 @@ def has_curl():
     cmd = ['curl', '--version']
     devnull = open(os.path.devnull, 'wb')
     try:
-        try:
-            subprocess.check_call(cmd, stdout=devnull, stderr=devnull)
-        except Exception:
-            return False
+        subprocess.check_call(cmd, stdout=devnull, stderr=devnull)
+    except Exception:
+        return False
     finally:
         devnull.close()
     return True
@@ -210,10 +208,9 @@ def has_wget():
     cmd = ['wget', '--version']
     devnull = open(os.path.devnull, 'wb')
     try:
-        try:
-            subprocess.check_call(cmd, stdout=devnull, stderr=devnull)
-        except Exception:
-            return False
+        subprocess.check_call(cmd, stdout=devnull, stderr=devnull)
+    except Exception:
+        return False
     finally:
         devnull.close()
     return True
@@ -271,7 +268,7 @@ def download_setuptools(version=DEFAULT_VERSION, download_base=DEFAULT_URL,
     """
     # making sure we use the absolute path
     to_dir = os.path.abspath(to_dir)
-    zip_name = "setuptools-%s.zip" % version
+    zip_name = f"setuptools-{version}.zip"
     url = download_base + zip_name
     saveto = os.path.join(to_dir, zip_name)
     if not os.path.exists(saveto):  # Avoid repeated downloads

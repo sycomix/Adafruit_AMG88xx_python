@@ -71,8 +71,8 @@ def map(x, in_min, in_max, out_min, out_max):
     return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
 # map sensor readings to color map
-MINTEMP = min(pixels) if args.min == None else args.min
-MAXTEMP = max(pixels) if args.max == None else args.max
+MINTEMP = min(pixels) if args.min is None else args.min
+MAXTEMP = max(pixels) if args.max is None else args.max
 pixels = [map(p, MINTEMP, MAXTEMP, 0, COLORDEPTH - 1) for p in pixels]
 
 # create the image
